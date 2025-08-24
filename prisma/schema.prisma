@@ -13,10 +13,89 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Portfolio {
+model Warehouseman {
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  firstName       String
+  lastName        String
+  email           String?
+  phone           String?
+  profBackground  String?
+  technologyFocus String?
+  skills          Skills[]
+  workExperience  WorkExperience[]
+  certificates    Certificate[]
+  experienceYears String?
+  managedProducts String?
+  solvedLogistics String?
+  efficiencyRate  String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model WorkExperience {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  company        String
+  position       String
+  period         String
+  description    String
+  location       String
+  warehousemanId String       @db.ObjectId
+  warehouseman   Warehouseman @relation(fields: [warehousemanId], references: [id])
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model Skills {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  level          String
+  category       String
+  warehousemanId String       @db.ObjectId
+  warehouseman   Warehouseman @relation(fields: [warehousemanId], references: [id])
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model Certificate {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  date           String
+  organization   String
+  image          String
+  warehousemanId String       @db.ObjectId
+  warehouseman   Warehouseman @relation(fields: [warehousemanId], references: [id])
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model BlogPost {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
+  date        DateTime
+  readTime    String
+  category    String
+  image       String
+  content     String
+  author      String   @default("Namiq Quliyev")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model JobListing {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  company      String //+
+  position     String //+
+  city         String //+
+  deadline     DateTime //+
+  type         String // 
+  salary       String //+
+  description  String //+
+  requirements String[] //+
+  link         String // +
+  postedDate   DateTime // +
+  status       String   @default("Aktiv")
+  urgent       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
