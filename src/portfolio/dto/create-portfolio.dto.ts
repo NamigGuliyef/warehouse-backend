@@ -14,7 +14,7 @@ export class WarehousemanDTO {
   @ApiProperty()
   @IsNotEmpty()
   phone: string;
-  @ApiProperty()
+  @ApiProperty()      
   @IsOptional()
   profBackground?: string;
   @ApiProperty()
