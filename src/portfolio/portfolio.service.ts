@@ -18,6 +18,12 @@ export class PortfolioService {
   }
 
 
+  // Anbardar profili əldə et
+  async getWarehousemanProfile() {
+    return this.prisma.warehouseman.findMany()
+  }
+
+
   async getWarehousemanById(id: string) {
     return this.prisma.warehouseman.findUnique({
       where: { id }

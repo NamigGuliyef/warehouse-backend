@@ -4,17 +4,17 @@ import { IsNotEmpty, IsOptional } from "class-validator";
 export class WarehousemanDTO {
   @ApiProperty()
   @IsNotEmpty()
-  firstName: string
+  fullName: string;
   @ApiProperty()
   @IsNotEmpty()
-  lastName: string
+  position: string;
   @ApiProperty()
   @IsNotEmpty()
-  email: string
+  email: string;
   @ApiProperty()
   @IsNotEmpty()
   phone: string;
-  @ApiProperty()      
+  @ApiProperty()
   @IsOptional()
   profBackground?: string;
   @ApiProperty()

@@ -22,10 +22,10 @@ export class PortfolioController {
   @ApiBody({
     schema: {
       type: "object", properties: {
-        firstName: { type: "string", maxLength: 100, example: "Namiq" },
-        lastName: { type: "string", maxLength: 100, example: "Quliyev" },
+        fullName: { type: "string", maxLength: 100, example: "Namiq Quliyev" },
         email: { type: "string", format: "email", example: "namiq.quliyev@example.com" },
         phone: { type: "string", maxLength: 15, example: "+994 50 123 45 67" },
+        position: { type: "string", maxLength: 100, example: "Warehouse Manager" },
         profBackground: { type: "string", example: "Logistics Specialist" },
         technologyFocus: { type: "string", example: "Supply Chain Management" },
         experienceYears: { type: "string", maxLength: 50, example: "5" },
@@ -40,8 +40,15 @@ export class PortfolioController {
   }
 
 
+  @ApiOperation({ summary: "Anbardar profili əldə et" })
+  @HttpCode(HttpStatus.OK)
+  @Get('dashboard/warehouseman')
+  async getWarehousemanProfile() {
+    return this.portfolioService.getWarehousemanProfile();
+  }
 
-  @ApiOperation({ summary: "Anbardar profilini elde et" })
+
+  @ApiOperation({ summary: "Anbardar profilini ID ilə əldə et" })
   @HttpCode(HttpStatus.OK)
   @Get('dashboard/warehouseman/:id')
   async getWarehousemanById(@Param('id') id: string) {
@@ -56,8 +63,8 @@ export class PortfolioController {
   @ApiBody({
     schema: {
       type: "object", properties: {
-        firstName: { type: "string", maxLength: 100, example: "Namiq" },
-        lastName: { type: "string", maxLength: 100, example: "Quliyev" },
+        fullName: { type: "string", maxLength: 100, example: "Quliyev Namiq" },
+        position: { type: "string", maxLength: 100, example: "Warehouse Manager" },
         email: { type: "string", format: "email", example: "namiq.quliyev@example.com" },
         phone: { type: "string", maxLength: 15, example: "+994 50 123 45 67" },
         profBackground: { type: "string", example: "Logistics Specialist" },
