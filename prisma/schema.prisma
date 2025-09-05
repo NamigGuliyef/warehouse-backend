@@ -21,9 +21,6 @@ model Warehouseman {
   phone           String?
   profBackground  String?
   technologyFocus String?
-  skills          Skills[]
-  workExperience  WorkExperience[]
-  certificates    Certificate[]
   experienceYears String?
   managedProducts String?
   solvedLogistics String?
@@ -39,8 +36,6 @@ model WorkExperience {
   period         String
   description    String
   location       String
-  warehousemanId String       @db.ObjectId
-  warehouseman   Warehouseman @relation(fields: [warehousemanId], references: [id])
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
 }
@@ -50,8 +45,6 @@ model Skills {
   name           String
   level          String
   category       String
-  warehousemanId String       @db.ObjectId
-  warehouseman   Warehouseman @relation(fields: [warehousemanId], references: [id])
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
 }
@@ -62,8 +55,6 @@ model Certificate {
   date           String
   organization   String
   image          String
-  warehousemanId String       @db.ObjectId
-  warehouseman   Warehouseman @relation(fields: [warehousemanId], references: [id])
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
 }

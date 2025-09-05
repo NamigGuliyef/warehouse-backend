@@ -94,7 +94,6 @@ export class PortfolioController {
         period: { type: "string", maxLength: 50, example: "2018-2022" },
         description: { type: "string", example: "Managed warehouse operations and logistics." },
         location: { type: "string", maxLength: 100, example: "Baku, Azerbaijan" },
-        warehousemanId: { type: "string", example: "1234567890" },
       }
     }
   })
