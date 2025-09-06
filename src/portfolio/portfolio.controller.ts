@@ -56,7 +56,6 @@ export class PortfolioController {
   }
 
 
-
   @ApiOperation({ summary: "Anbardar profilini yenile" })
   @HttpCode(HttpStatus.OK)
   @Patch('dashboard/warehouseman/:id')
@@ -82,7 +81,6 @@ export class PortfolioController {
 
 
   // İş təcrübəsi
-
   @ApiOperation({ summary: "Yeni iş təcrübəsi əlavə et" })
   @Post('dashboard/work-experience')
   @HttpCode(HttpStatus.CREATED)
@@ -131,7 +129,6 @@ export class PortfolioController {
         period: { type: "string", maxLength: 50, example: "2018-2022" },
         description: { type: "string", example: "Managed warehouse operations and logistics." },
         location: { type: "string", maxLength: 100, example: "Baku, Azerbaijan" },
-        warehousemanId: { type: "string", example: "1234567890" },
       }
     }
   })

@@ -11,7 +11,4 @@ export class CreateSkillDTO {
     @ApiProperty()
     @IsNotEmpty()
     category: string;
-    @ApiProperty()
-    @IsNotEmpty()
-    warehousemanId: string;
 }
