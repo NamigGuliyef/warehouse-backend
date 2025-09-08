@@ -122,6 +122,12 @@ export class PortfolioService {
 
   // Sertifikat yeniləmə
   async updateCertificate(id: string, certificateData: CertificateDTO, image: Express.Multer.File) {
+    if (!image || image.path === '') {
+      return this.prisma.certificate.update({
+        where: { id },
+        data: { ...certificateData }
+      })
+    }
     const data = await cloudinary.uploader.upload(image.path, { public_id: image.originalname })
     return this.prisma.certificate.update({
       where: { id },
