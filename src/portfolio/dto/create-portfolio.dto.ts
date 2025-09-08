@@ -80,12 +80,10 @@ export class CertificateDTO {
   date: string;
   @ApiProperty()
   @IsNotEmpty()
-  issuer: string;
+  organization: string;
   @ApiProperty()
   @IsNotEmpty()
   image: string;
-  @ApiProperty()
-  warehousemanId: string
 }
 
 

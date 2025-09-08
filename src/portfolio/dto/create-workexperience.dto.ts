@@ -17,7 +17,4 @@ export class CreateWorkExperienceDTO {
     @ApiProperty()
     @IsNotEmpty()
     location: string;
-    @ApiProperty()
-    @IsNotEmpty()
-    warehousemanId: string;
 }

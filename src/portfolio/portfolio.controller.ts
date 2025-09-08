@@ -1,6 +1,8 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { WarehousemanDTO } from './dto/create-portfolio.dto';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { MulterOptions } from 'config/multer';
+import { CertificateDTO, WarehousemanDTO } from './dto/create-portfolio.dto';
 import { CreateSkillDTO } from './dto/create-skill.dto';
 import { CreateWorkExperienceDTO } from './dto/create-workexperience.dto';
 import { UpdateWarehousemanDTO } from './dto/update-portfolio.dto';
@@ -185,6 +187,74 @@ export class PortfolioController {
   @HttpCode(HttpStatus.OK)
   async deleteSkill(@Param('id') id: string) {
     return this.portfolioService.deleteSkill(id);
+  }
+
+
+  // Sertifikatlar
+  @ApiOperation({ summary: "Yeni sertifikat əlavə et" })
+  @ApiConsumes('multipart/form-data')
+  @Post('dashboard/certificates')
+  @UseInterceptors(FileInterceptor('image', MulterOptions))
+  @HttpCode(HttpStatus.CREATED)
+  @ApiBody({
+    schema: {
+      type: "object", properties: {
+        name: { type: "string", maxLength: 100, example: "Certified Logistics Professional" },
+        date: { type: "string", example: "2022-01-01" },
+        organization: { type: "string", maxLength: 100, example: "Logistics Academy" },
+        image: { type: "string", format: "binary" }
+      }
+    }
+  })
+  async createCertificate(@Body() createCertificateDTO: CertificateDTO, @UploadedFile() image: Express.Multer.File) {
+    return this.portfolioService.createCertificate(createCertificateDTO, image);
+  }
+
+
+  @ApiOperation({ summary: "Sertifikatı yenilə" })
+  @ApiConsumes('multipart/form-data')
+  @Patch('dashboard/certificates/:id')
+  @UseInterceptors(FileInterceptor('image', MulterOptions))
+  @HttpCode(HttpStatus.OK)
+  @ApiBody({
+    schema: {
+      type: "object", properties: {
+        name: { type: "string", maxLength: 100, example: "Certified Logistics Professional" },
+        date: { type: "string", example: "2022-01-01" },
+        organization: { type: "string", maxLength: 100, example: "Logistics Academy" },
+        image: { type: "string", format: "binary" }
+      }
+    }
+  })
+  async updateCertificate(@Param('id') id: string, @Body() updateCertificateDTO: CertificateDTO, @UploadedFile() image: Express.Multer.File) {
+    return this.portfolioService.updateCertificate(id, updateCertificateDTO, image);
+  }
+
+
+
+  @ApiOperation({ summary: "Sertifikatı ID ilə əldə et" })
+  @Get('dashboard/certificates/:id')
+  @HttpCode(HttpStatus.OK)
+  async getCertificateById(@Param('id') id: string) {
+    return this.portfolioService.getCertificateById(id);
+  }
+
+
+
+  // Sertifikatları əldə et
+  @ApiOperation({ summary: "Bütün sertifikatları əldə et" })
+  @Get('dashboard/certificates')
+  @HttpCode(HttpStatus.OK)
+  async getAllCertificates() {
+    return this.portfolioService.getAllCertificates();
+  }
+
+
+  @ApiOperation({ summary: "Sertifikatı sil" })
+  @Delete('dashboard/certificates/:id')
+  @HttpCode(HttpStatus.OK)
+  async deleteCertificate(@Param('id') id: string) {
+    return this.portfolioService.deleteCertificate(id);
   }
 
 

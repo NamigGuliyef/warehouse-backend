@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { WarehousemanDTO } from './dto/create-portfolio.dto';
+import { CertificateDTO, WarehousemanDTO } from './dto/create-portfolio.dto';
 import { UpdateSkillDTO, UpdateWarehousemanDTO } from './dto/update-portfolio.dto';
 import { CreateWorkExperienceDTO } from './dto/create-workexperience.dto';
 import { UpdateWorkExperienceDTO } from './dto/update-workexperience.dto';
 import { CreateSkillDTO } from './dto/create-skill.dto';
+import cloudinary from 'config/cloudinary';
 
 @Injectable()
 export class PortfolioService {
@@ -104,6 +105,45 @@ export class PortfolioService {
 
   async deleteSkill(id: string) {
     return this.prisma.skills.delete({
+      where: { id }
+    })
+  }
+
+
+
+  // Sertifikatlar
+  async createCertificate(certificateData: CertificateDTO, images: Express.Multer.File) {
+    const data = await cloudinary.uploader.upload(images.path, { public_id: images.originalname })
+    return this.prisma.certificate.create({
+      data: { ...certificateData, image: data.secure_url }
+    })
+  }
+
+
+  // Sertifikat yeniləmə
+  async updateCertificate(id: string, certificateData: CertificateDTO, image: Express.Multer.File) {
+    const data = await cloudinary.uploader.upload(image.path, { public_id: image.originalname })
+    return this.prisma.certificate.update({
+      where: { id },
+      data: { ...certificateData, image: data.secure_url }
+    })
+  }
+
+
+  async getCertificateById(id: string) {
+    return this.prisma.certificate.findUnique({
+      where: { id }
+    })
+  }
+
+
+  async getAllCertificates() {
+    return this.prisma.certificate.findMany()
+  }
+
+
+  async deleteCertificate(id: string) {
+    return this.prisma.certificate.delete({
       where: { id }
     })
   }
