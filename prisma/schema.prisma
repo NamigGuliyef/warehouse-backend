@@ -61,14 +61,13 @@ model Certificate {
 
 model BlogPost {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  description String
-  date        DateTime
-  readTime    String
-  category    String
-  image       String
-  content     String
   author      String   @default("Namiq Quliyev")
+  title       String
+  category    String
+  description String
+  readTime    String
+  image       String
+  active      Boolean 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

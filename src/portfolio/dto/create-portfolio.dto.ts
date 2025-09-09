@@ -1,5 +1,6 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsOptional } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
+import { IsBoolean, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class WarehousemanDTO {
   @ApiProperty()
@@ -34,7 +35,6 @@ export class WarehousemanDTO {
   efficiencyRate?: string;
 }
 
-
 export class SkillDTO {
   @ApiProperty()
   @IsNotEmpty()
@@ -49,27 +49,25 @@ export class SkillDTO {
   warehousemanId: string;
 }
 
-
 export class WorkExperienceDTO {
   @ApiProperty()
   @IsNotEmpty()
-  company: string
+  company: string;
   @ApiProperty()
   @IsNotEmpty()
-  position: string
+  position: string;
   @ApiProperty()
   @IsNotEmpty()
-  period: string
+  period: string;
   @ApiProperty()
   @IsNotEmpty()
-  description: string
+  description: string;
   @ApiProperty()
   @IsNotEmpty()
-  location: string
+  location: string;
   @ApiProperty()
-  warehousemanId: string
+  warehousemanId: string;
 }
-
 
 export class CertificateDTO {
   @ApiProperty()
@@ -86,8 +84,10 @@ export class CertificateDTO {
   image: string;
 }
 
-
 export class BlogPostDTO {
+  @ApiProperty()
+  @IsNotEmpty()
+  author?: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -95,32 +95,26 @@ export class BlogPostDTO {
 
   @ApiProperty()
   @IsNotEmpty()
-  description: string;
+  category: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  date: Date;
+  description: string;
 
   @ApiProperty()
   @IsNotEmpty()
   readTime: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  category: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   image: string;
 
   @ApiProperty()
+  @IsBoolean()
   @IsNotEmpty()
-  content: string;
-  @ApiProperty()
-  @IsNotEmpty()
-  author?: string;
+  @Transform(({ value }) => value === true || value === 'true')
+  active: boolean;
 }
-
 
 export class JobDTO {
   @ApiProperty()

@@ -1,8 +1,8 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { MulterOptions } from 'config/multer';
-import { CertificateDTO, WarehousemanDTO } from './dto/create-portfolio.dto';
+import { BlogPostDTO, CertificateDTO, WarehousemanDTO } from './dto/create-portfolio.dto';
 import { CreateSkillDTO } from './dto/create-skill.dto';
 import { CreateWorkExperienceDTO } from './dto/create-workexperience.dto';
 import { UpdateWarehousemanDTO } from './dto/update-portfolio.dto';
@@ -256,6 +256,83 @@ export class PortfolioController {
   async deleteCertificate(@Param('id') id: string) {
     return this.portfolioService.deleteCertificate(id);
   }
+
+
+  // Blog Postları
+  @ApiOperation({ summary: "Yeni blog postu əlavə et" })
+  @ApiConsumes('multipart/form-data')
+  @Post('dashboard/blog-posts')
+  @UseInterceptors(FileInterceptor('image', MulterOptions))
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @HttpCode(HttpStatus.CREATED)
+  @ApiBody({
+    schema: {
+      type: "object", properties: {
+        author: { type: "string", maxLength: 100, example: "Namiq Quliyev" },
+        title: { type: "string", maxLength: 200, example: "The Future of Warehouse Management" },
+        category: { type: "string", maxLength: 100, example: "Logistics" },
+        description: { type: "string", maxLength: 500, example: "An overview of upcoming trends in warehouse management." },
+        readTime: { type: "string", maxLength: 50, example: "5 min read" },
+        active: { type: "boolean", example: false },
+        image: { type: "string", format: "binary" }
+      }
+    }
+  })
+  async createBlogPost(@Body() BlogPostData: BlogPostDTO, @UploadedFile() image: Express.Multer.File) {
+    return this.portfolioService.createBlogPost(BlogPostData, image);
+  }
+
+
+
+  @ApiOperation({ summary: "Blog postu yenilə" })
+  @ApiConsumes('multipart/form-data')
+  @Patch('dashboard/blog-posts/:id')
+  @UseInterceptors(FileInterceptor('image', MulterOptions))
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @HttpCode(HttpStatus.OK)
+  @ApiBody({
+    schema: {
+      type: "object", properties: { 
+        author: { type: "string", maxLength: 100, example: "Namiq Quliyev" },
+        title: { type: "string", maxLength: 200, example: "The Future of Warehouse Management" },
+        category: { type: "string", maxLength: 100, example: "Logistics" },
+        description: { type: "string", maxLength: 500, example: "An overview of upcoming trends in warehouse management." },
+        readTime: { type: "string", maxLength: 50, example: "5 min read" },
+        active: { type: "boolean", example: false },
+        image: { type: "string", format: "binary" }
+      }
+    }
+  })
+  async updateBlog(@Param('id') id: string, @Body() BlogPostData: BlogPostDTO, @UploadedFile() image: Express.Multer.File) {
+    return this.portfolioService.updateBlog(id, BlogPostData, image);
+  }
+
+
+
+  @ApiOperation({ summary: "Blog postu ID ilə əldə et" })
+  @Get('dashboard/blog-posts/:id')
+  @HttpCode(HttpStatus.OK)
+  async getBlogById(@Param('id') id: string) {
+    return this.portfolioService.getBlogById(id);
+  }
+
+
+
+  @ApiOperation({ summary: "Bütün blog postlarını əldə et" })
+  @Get('dashboard/blog-posts')
+  @HttpCode(HttpStatus.OK)
+  async getAllBlogs() {
+    return this.portfolioService.getAllBlogs();
+  }
+
+
+  @ApiOperation({ summary: "Blog postu sil" })
+  @Delete('dashboard/blog-posts/:id')
+  @HttpCode(HttpStatus.OK)
+  async deleteBlog(@Param('id') id: string) {
+    return this.portfolioService.deleteBlog(id);
+  }
+
 
 
 }
