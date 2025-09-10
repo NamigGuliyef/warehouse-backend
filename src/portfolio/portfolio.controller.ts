@@ -309,6 +309,16 @@ export class PortfolioController {
 
 
 
+  // Blog aktivliyini dəyişdirmə
+  @ApiOperation({ summary: "Blog postunun aktivlik statusunu dəyiş" })
+  @Patch('dashboard/blog-posts/:id/toggle-active')
+  @HttpCode(HttpStatus.OK)
+  async toggleBlogActiveStatus(@Param('id') id: string, @Body('active') isActive: boolean) {
+    return this.portfolioService.toggleBlogActiveStatus(id, isActive);
+  }
+
+
+
   @ApiOperation({ summary: "Blog postu ID ilə əldə et" })
   @Get('dashboard/blog-posts/:id')
   @HttpCode(HttpStatus.OK)

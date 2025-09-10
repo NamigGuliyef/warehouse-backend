@@ -201,6 +201,17 @@ export class PortfolioService {
 
 }
 
+
+  // Blog aktivliyini dəyişdirmə
+  async toggleBlogActiveStatus(id: string, isActive: boolean) {
+    return this.prisma.blogPost.update({
+      where: { id },
+      data: { active: isActive },
+    });
+  }
+
+
+  
   // Blogları əldə et
   async getAllBlogs() {
     return this.prisma.blogPost.findMany();
