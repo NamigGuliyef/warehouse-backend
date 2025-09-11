@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import cloudinary from 'config/cloudinary';
 import { PrismaService } from 'src/prisma/prisma.service';
 import {
   BlogPostDTO,
   CertificateDTO,
   WarehousemanDTO,
 } from './dto/create-portfolio.dto';
+import { CreateSkillDTO } from './dto/create-skill.dto';
+import { CreateWorkExperienceDTO } from './dto/create-workexperience.dto';
 import {
   UpdateSkillDTO,
   UpdateWarehousemanDTO,
 } from './dto/update-portfolio.dto';
-import { CreateWorkExperienceDTO } from './dto/create-workexperience.dto';
 import { UpdateWorkExperienceDTO } from './dto/update-workexperience.dto';
-import { CreateSkillDTO } from './dto/create-skill.dto';
-import cloudinary from 'config/cloudinary';
 
 @Injectable()
 export class PortfolioService {
@@ -222,4 +222,14 @@ export class PortfolioService {
       where: { id },
     });
   }
+
+
+
+  // Vakansiya əlavə et
+  async createVacancy(vacancyData: any) {``
+
+
+
+
+
 }

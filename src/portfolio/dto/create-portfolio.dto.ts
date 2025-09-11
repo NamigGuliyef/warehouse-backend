@@ -127,6 +127,10 @@ export class JobDTO {
 
   @ApiProperty()
   @IsNotEmpty()
+  location: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
   city: string;
 
   @ApiProperty()
@@ -135,13 +139,18 @@ export class JobDTO {
 
   @ApiProperty()
   @IsNotEmpty()
+  deadline: Date;
+
+  @ApiProperty()
+  @IsNotEmpty()
   link: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  postedDate: string; 
+  status: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  status: string;
+  schedule: string;
+
 }

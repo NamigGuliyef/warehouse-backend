@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Warehouseman {
-  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
   fullName        String
   position        String?
   email           String?
@@ -25,38 +25,38 @@ model Warehouseman {
   managedProducts String?
   solvedLogistics String?
   efficiencyRate  String?
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model WorkExperience {
-  id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  company        String
-  position       String
-  period         String
-  description    String
-  location       String
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  company     String
+  position    String
+  period      String
+  description String
+  location    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Skills {
-  id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  name           String
-  level          String
-  category       String
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  level     String
+  category  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Certificate {
-  id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  name           String
-  date           String
-  organization   String
-  image          String
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  date         String
+  organization String
+  image        String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model BlogPost {
@@ -67,20 +67,24 @@ model BlogPost {
   description String
   readTime    String
   image       String
-  active      Boolean 
+  active      Boolean
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
-model Job {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  company    String
-  position   String
-  city       String
-  salary     String
-  link       String
-  postedDate String
-  status     String
+model JobListing {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  position String //+
+  company  String //+
+  location String //+
+  salary   String //+
+  deadline DateTime //+
+  link     String // +
+  schedule String // +
+  priority String // +
+  description  String //+ 
+  requirements String // +
+  status     String   @default("Aktiv")
   createdAt  DateTime @default(now())
-}
-
+  updatedAt  DateTime @updatedAt
+} 
