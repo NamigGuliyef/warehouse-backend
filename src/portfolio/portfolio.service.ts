@@ -160,14 +160,9 @@ export class PortfolioService {
     });
   }
 
-
-
   // Blog API- şəkildə əlavə olunacaq
   async createBlogPost(BlogPostData: BlogPostDTO, image: Express.Multer.File) {
-      const activeValue =
-    BlogPostData.active === true 
-      ? true
-      : false;
+    const activeValue = BlogPostData.active === true ? true : false;
     const data = await cloudinary.uploader.upload(image.path, {
       public_id: image.originalname,
     });
@@ -176,19 +171,19 @@ export class PortfolioService {
     });
   }
 
-
   // Blog dəyişdirmə
 
-  async updateBlog(id: string, BlogPostData: BlogPostDTO, image: Express.Multer.File) {
-     // active-i həmişə boolean-a çeviririk
-  const activeValue =
-    BlogPostData.active === true 
-      ? true
-      : false;
-    if (!image || image.path === '' ) {
-      return this.prisma.blogPost.update({ 
+  async updateBlog(
+    id: string,
+    BlogPostData: BlogPostDTO,
+    image: Express.Multer.File,
+  ) {
+    // active-i həmişə boolean-a çeviririk
+    const activeValue = BlogPostData.active === true ? true : false;
+    if (!image || image.path === '') {
+      return this.prisma.blogPost.update({
         where: { id },
-        data: { ...BlogPostData, active: activeValue } 
+        data: { ...BlogPostData, active: activeValue },
       });
     }
     const data = await cloudinary.uploader.upload(image.path, {
@@ -196,11 +191,9 @@ export class PortfolioService {
     });
     return this.prisma.blogPost.update({
       where: { id },
-      data: { ...BlogPostData, image: data.secure_url , active: activeValue},
-  })
-
-}
-
+      data: { ...BlogPostData, image: data.secure_url, active: activeValue },
+    });
+  }
 
   // Blog aktivliyini dəyişdirmə
   async toggleBlogActiveStatus(id: string, isActive: boolean) {
@@ -210,12 +203,10 @@ export class PortfolioService {
     });
   }
 
-
-  
   // Blogları əldə et
   async getAllBlogs() {
-    return this.prisma.blogPost.findMany();
-  } 
+    return this.prisma.blogPost.findMany({ where: { active: true }});
+  }
 
   // Blogu ID ilə əldə et
 

@@ -343,6 +343,4 @@ export class PortfolioController {
     return this.portfolioService.deleteBlog(id);
   }
 
-
-
 }

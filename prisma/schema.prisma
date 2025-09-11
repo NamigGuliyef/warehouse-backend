@@ -72,20 +72,15 @@ model BlogPost {
   updatedAt   DateTime @updatedAt
 }
 
-model JobListing {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  company      String //+
-  position     String //+
-  city         String //+
-  deadline     DateTime //+
-  type         String // 
-  salary       String //+
-  description  String //+
-  requirements String[] //+
-  link         String // +
-  postedDate   DateTime // +
-  status       String   @default("Aktiv")
-  urgent       Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+model Job {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  company    String
+  position   String
+  city       String
+  salary     String
+  link       String
+  postedDate String
+  status     String
+  createdAt  DateTime @default(now())
 }
+

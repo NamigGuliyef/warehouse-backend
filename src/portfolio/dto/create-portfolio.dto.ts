@@ -131,23 +131,7 @@ export class JobDTO {
 
   @ApiProperty()
   @IsNotEmpty()
-  deadline: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  type: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
   salary: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  description: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  requirements: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -155,13 +139,9 @@ export class JobDTO {
 
   @ApiProperty()
   @IsNotEmpty()
-  postedDate: string;
+  postedDate: string; 
 
   @ApiProperty()
   @IsNotEmpty()
   status: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  urgent: boolean;
 }
