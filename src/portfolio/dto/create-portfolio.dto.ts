@@ -116,7 +116,8 @@ export class BlogPostDTO {
   active: boolean;
 }
 
-export class JobDTO {
+export class JobDTO { 
+
   @ApiProperty()
   @IsNotEmpty()
   company: string;
@@ -124,10 +125,6 @@ export class JobDTO {
   @ApiProperty()
   @IsNotEmpty()
   position: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  location: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -139,7 +136,7 @@ export class JobDTO {
 
   @ApiProperty()
   @IsNotEmpty()
-  deadline: Date;
+  deadline: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -147,10 +144,21 @@ export class JobDTO {
 
   @ApiProperty()
   @IsNotEmpty()
-  status: string;
+  work_schedule: string;
+  
+  @ApiProperty()
+  @IsNotEmpty()
+  priority : string
 
   @ApiProperty()
   @IsNotEmpty()
-  schedule: string;
+  description : string
 
+  @ApiProperty()
+  @IsNotEmpty()
+  requirements : string
+
+  @ApiProperty()
+  @IsNotEmpty()
+  status: string;
 }

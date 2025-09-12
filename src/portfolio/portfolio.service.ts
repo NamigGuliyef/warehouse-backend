@@ -4,6 +4,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import {
   BlogPostDTO,
   CertificateDTO,
+  JobDTO,
   WarehousemanDTO,
 } from './dto/create-portfolio.dto';
 import { CreateSkillDTO } from './dto/create-skill.dto';
@@ -226,10 +227,47 @@ export class PortfolioService {
 
 
   // Vakansiya əlavə et
-  async createVacancy(vacancyData: any) {``
+  async createVacancy(jobData:JobDTO) {
+    return this.prisma.jobListing.create({
+      data: jobData,
+    });
+  }
+
+  // Vakansiya yenilə
+  async updateVacancy(id: string, jobData:JobDTO) {
+    return this.prisma.jobListing.update({
+      where: { id },
+      data: jobData,
+    });
+  }
 
 
 
 
+  // şəhər axtarışı ilə vakansiyaları əldə et və axtarış olmadıqda bütün vakansiyaları gətir
+  async searchVacancies(city?: string) {
+    if (city) { 
+      return this.prisma.jobListing.findMany({
+        where: { city} });
+    } 
+    return this.prisma.jobListing.findMany();
+  }
+
+
+  // Vakansiyanı ID ilə əldə et
+  async getVacancyById(id: string)
+  {
+    return this.prisma.jobListing.findUnique({
+      where: { id },
+    });
+  }
+
+
+  // Vakansiyanı sil
+  async deleteVacancy(id: string) {
+    return this.prisma.jobListing.delete({
+      where: { id },
+    });
+  }
 
 }

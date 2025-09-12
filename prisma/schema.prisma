@@ -74,17 +74,17 @@ model BlogPost {
 
 model JobListing {
   id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  position String //+
-  company  String //+
-  location String //+
-  salary   String //+
-  deadline DateTime //+
-  link     String // +
-  schedule String // +
-  priority String // +
-  description  String //+ 
-  requirements String // +
-  status     String   @default("Aktiv")
+  company  String // Şirkət
+  position String // Vakansiya
+  city     String // Şəhər
+  salary   String // Maaş
+  deadline String // son tarix
+  link     String //  Linki
+  work_schedule  String //  İş qrafiki
+  priority String //  Təcili və ya adi
+  description  String //+ Təsvir
+  requirements String // + Tələblər
+  status   String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 } 

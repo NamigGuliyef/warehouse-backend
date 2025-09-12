@@ -1,14 +1,15 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { MulterOptions } from 'config/multer';
-import { BlogPostDTO, CertificateDTO, WarehousemanDTO } from './dto/create-portfolio.dto';
+import { BlogPostDTO, CertificateDTO, JobDTO, WarehousemanDTO } from './dto/create-portfolio.dto';
 import { CreateSkillDTO } from './dto/create-skill.dto';
 import { CreateWorkExperienceDTO } from './dto/create-workexperience.dto';
 import { UpdateWarehousemanDTO } from './dto/update-portfolio.dto';
 import { UpdateSkillDTO } from './dto/update-skill.dto';
 import { UpdateWorkExperienceDTO } from './dto/update-workexperience.dto';
 import { PortfolioService } from './portfolio.service';
+import { link } from 'fs';
 
 
 @ApiTags("Portfolio")
@@ -342,5 +343,87 @@ export class PortfolioController {
   async deleteBlog(@Param('id') id: string) {
     return this.portfolioService.deleteBlog(id);
   }
+
+
+  // Vakansiyalar CRUD API
+
+  // Vakansiya əlavə et
+  @ApiOperation({ summary: "Yeni vakansiya əlavə et" })
+  @Post('dashboard/vacancies')
+  @HttpCode(HttpStatus.CREATED)
+  @ApiBody({
+    schema: {
+      type: "object", properties: {
+        company: { type: "string", maxLength: 100, example: "ABC Logistics" },
+        position: { type: "string", maxLength: 100, example: "Warehouse Supervisor" },
+        city: { type: "string", maxLength: 100, example: "Baku" },
+        salary: { type: "string", maxLength: 100, example: "$3000 - $4000" },
+        deadline: { type: "string", example: "2024-12-31" },
+        link: { type: "string", example: "https://example.com/apply" },
+        priority: { type: "string", example: "High" },
+        work_schedule: { type: "string", example: "Full-time" },
+        description: { type: "string", example: "Responsible for overseeing warehouse operations." },
+        requirements: { type: "string", example: "3+ years in warehouse management." },
+        status: { type: "string", example: "Open" },
+      }
+    }
+  })
+  async createVacancy(@Body() jobData: JobDTO) {
+    return this.portfolioService.createVacancy(jobData);
+  }
+ 
+
+  // Vakansiyanı yenilə
+  @ApiOperation({ summary: "Vakansiyanı yenilə" })
+  @Patch('dashboard/vacancies/:id')
+  @HttpCode(HttpStatus.OK)
+  @ApiBody({
+    schema: {
+      type: "object", properties: {
+        company: { type: "string", maxLength: 100, example: "ABC Logistics" },
+        position: { type: "string", maxLength: 100, example: "Warehouse Supervisor" },
+        city: { type: "string", maxLength: 100, example: "Baku" },
+        salary: { type: "string", maxLength: 100, example: "$3000 - $4000" },
+        deadline: { type: "string", example: "2024-12-31" },
+        link: { type: "string", example: "https://example.com/apply" },
+        priority: { type: "string", example: "High" },
+        work_schedule: { type: "string", example: "Full-time" },
+        description: { type: "string", example: "Responsible for overseeing warehouse operations." },
+        requirements: { type: "string", example: "3+ years in warehouse management." },
+        status: { type: "string", example: "Open" },
+      }
+    }
+  })
+  async updateVacancy(@Param('id') id: string, @Body() jobData: JobDTO) {
+    return this.portfolioService.updateVacancy(id, jobData);
+  }
+
+
+  // Vakansiyanı ID ilə əldə et
+  @ApiOperation({ summary: "Vakansiyanı ID ilə əldə et" })
+  @Get('dashboard/vacancies/:id')
+  @HttpCode(HttpStatus.OK)
+  async getVacancyById(@Param('id') id: string) {
+    return this.portfolioService.getVacancyById(id);
+  }
+
+  // Bütün vakansiyaları əldə et
+  @ApiOperation({ summary: "Vakansiyaları əldə et və axtar" })
+  @Get('dashboard/vacancies')
+  @ApiQuery({ name: 'city', required: false, type: String, description: 'Şəhər adı ilə axtarış' })
+  @HttpCode(HttpStatus.OK)
+  async searchVacancies(@Query('city') city?: string) {
+    return this.portfolioService.searchVacancies(city);
+  }
+
+
+  // Vakansiyanı sil
+  @ApiOperation({ summary: "Vakansiyanı sil" })
+  @Delete('dashboard/vacancies/:id')
+  @HttpCode(HttpStatus.OK)
+  async deleteVacancy(@Param('id') id: string) {
+    return this.portfolioService.deleteVacancy(id);
+  }
+
 
 }
